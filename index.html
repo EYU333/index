@@ -220,7 +220,7 @@
     </div>
 
     <script>
-        // 20个实验器材完整数据
+        // 20个实验器材完整数据 - 已修复图片URL为绝对地址
         const equipmentList = [
             { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://bfns.zhaomi.cn/web/0e96a36ec0d619011c52.jpg"  },
             { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://bfns.zhaomi.cn/web/b0b3f8dc8344135ae06d.jpg"  },
@@ -655,6 +655,20 @@
                 elements.micPermissionNote.style.display = 'none';
             }
         }
+
+        // 图片加载失败处理
+        document.getElementById('equipment-img').addEventListener('error', function() {
+            this.src = 'https://via.placeholder.com/400x300/cccccc/666666?text= 图片加载失败';
+            updateStatus('图片加载失败，请检查网络连接', 'error');
+        });
+
+        // 页面加载完成后预加载所有图片
+        window.addEventListener('load', function() {
+            equipmentList.forEach(equipment => {
+                const img = new Image();
+                img.src = equipment.imageUrl;
+            });
+        });
     </script>
 </body>
 </html>
