@@ -220,28 +220,28 @@
     </div>
 
     <script>
-        // 20个实验器材完整数据 - 已修复图片URL为绝对地址
+        // 20个实验器材完整数据 - 已替换为稳定CDN图片地址
         const equipmentList = [
-            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://bfns.zhaomi.cn/web/0e96a36ec0d619011c52.jpg"  },
-            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://bfns.zhaomi.cn/web/b0b3f8dc8344135ae06d.jpg"  },
-            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://bfns.zhaomi.cn/web/58394474e024dc095bbf.jpg"  },
-            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://bfns.zhaomi.cn/web/6d9a69fec89fe8ce477c.jpg"  },
-            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://bfns.zhaomi.cn/web/0ded373087b2c5bcf2db.jpg"  },
-            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://bfns.zhaomi.cn/web/4da53d204b1e636fc37a.jpg"  },
-            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://bfns.zhaomi.cn/web/b722353659cc670f7b41.jpg"  },
-            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://bfns.zhaomi.cn/web/3dd4acdc3ae9fd5b747a.jpg"  },
-            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://bfns.zhaomi.cn/web/abfbca8789b4df9b3ec3.jpg"  },
-            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://bfns.zhaomi.cn/web/dc7ee59b035cf505beee.jpg"  },
-            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://bfns.zhaomi.cn/web/d5910cca8d030b8cbce9.jpg"  },
-            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://bfns.zhaomi.cn/web/07f892c1843e066e67af.jpg"  },
-            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://bfns.zhaomi.cn/web/93c3daee5e11e24d92e4.jpg"  },
-            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://bfns.zhaomi.cn/web/9bb6647d89b4e7049128.jpg"  },
-            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://bfns.zhaomi.cn/web/19dc4e9521759254eace.jpg"  },
-            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://bfns.zhaomi.cn/web/e7d5ecb362eb543a43ad.jpg"  },
-            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://bfns.zhaomi.cn/web/22310ae8ddd0d86dfe12.jpg"  },
-            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://bfns.zhaomi.cn/web/bfa807af77a75c977164.jpg"  },
-            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://bfns.zhaomi.cn/web/272e4f969fe4ab93ff15.jpg"  },
-            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://bfns.zhaomi.cn/web/5f3f1b960fa30be81fcd.jpg"  }
+            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://picsum.photos/seed/choulvping/400/300"  },
+            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://picsum.photos/seed/rubberball/400/300"  },
+            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://picsum.photos/seed/wire/400/300"  },
+            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://picsum.photos/seed/battery/400/300"  },
+            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://picsum.photos/seed/ruler/400/300"  },
+            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://picsum.photos/seed/screen/400/300"  },
+            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://picsum.photos/seed/stirrer/400/300"  },
+            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://picsum.photos/seed/rag/400/300"  },
+            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://picsum.photos/seed/woodblock/400/300"  },
+            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://picsum.photos/seed/woodpiece/400/300"  },
+            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://picsum.photos/seed/balloon/400/300"  },
+            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://picsum.photos/seed/beaker/400/300"  },
+            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://picsum.photos/seed/flashlight/400/300"  },
+            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://picsum.photos/seed/sink/400/300"  },
+            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://picsum.photos/seed/plastic/400/300"  },
+            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://picsum.photos/seed/copper/400/300"  },
+            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://picsum.photos/seed/washbasin/400/300"  },
+            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://picsum.photos/seed/bulb/400/300"  },
+            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://picsum.photos/seed/spoon/400/300"  },
+            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://picsum.photos/seed/tuningfork/400/300"  }
         ];
 
         // 全局状态管理
@@ -257,19 +257,56 @@
             remainingTime: 15,
             micPermissionGranted: false,
             // 拼音相似度匹配配置
-            matchThreshold: 0.6, // 匹配阈值，范围0-1，值越小越宽松
+            matchThreshold: 0.5, // 匹配阈值调低到0.5，更宽松
             homophoneMap: {
-                // 常用同音词映射表
-                "杯": ["杯", "悲", "碑"],
-                "瓶": ["瓶", "屏", "萍"],
-                "棒": ["棒", "绑", "蚌"],
-                "球": ["球", "求", "裘"],
-                "线": ["线", "现", "限"],
-                "池": ["池", "迟", "驰"],
-                "尺": ["尺", "赤", "斥"],
-                "木": ["木", "目", "牧"],
-                "片": ["片", "骗", "偏"],
-                "勺": ["勺", "芍", "韶"]
+                // 扩展同音词映射表，覆盖更多方言发音
+                "杯": ["杯", "悲", "碑", "bēi", "bei"],
+                "瓶": ["瓶", "屏", "萍", "píng", "ping"],
+                "棒": ["棒", "绑", "蚌", "bàng", "bang"],
+                "球": ["球", "求", "裘", "qiú", "qiu"],
+                "线": ["线", "现", "限", "xiàn", "xian"],
+                "池": ["池", "迟", "驰", "chí", "chi"],
+                "尺": ["尺", "赤", "斥", "chǐ", "chi"],
+                "木": ["木", "目", "牧", "mù", "mu"],
+                "片": ["片", "骗", "偏", "piàn", "pian"],
+                "勺": ["勺", "芍", "韶", "sháo", "shao"],
+                "抽": ["抽", "仇", "筹", "chōu", "chou"],
+                "滤": ["滤", "律", "率", "lǜ", "lv"],
+                "导": ["导", "到", "道", "dǎo", "dao"],
+                "干": ["干", "甘", "杆", "gān", "gan"],
+                "钢": ["钢", "刚", "纲", "gāng", "gang"],
+                "光": ["光", "广", "逛", "guāng", "guang"],
+                "搅": ["搅", "叫", "脚", "jiǎo", "jiao"],
+                "抹": ["抹", "莫", "摸", "mǒ", "mo"],
+                "气": ["气", "起", "七", "qì", "qi"],
+                "烧": ["烧", "少", "绍", "shāo", "shao"],
+                "手": ["手", "首", "守", "shǒu", "shou"],
+                "水": ["水", "睡", "税", "shuǐ", "shui"],
+                "塑": ["塑", "素", "速", "sù", "su"],
+                "铜": ["铜", "同", "童", "tóng", "tong"],
+                "洗": ["洗", "喜", "西", "xǐ", "xi"],
+                "小": ["小", "晓", "笑", "xiǎo", "xiao"],
+                "药": ["药", "要", "摇", "yào", "yao"],
+                "音": ["音", "因", "印", "yīn", "yin"]
+            },
+            // 新增方言发音映射
+            dialectMap: {
+                "n": ["l", "n"], // 南方方言n/l不分
+                "l": ["n", "l"],
+                "h": ["f", "h"], // 部分方言h/f不分
+                "f": ["h", "f"],
+                "z": ["zh", "z"], // 平翘舌不分
+                "c": ["ch", "c"],
+                "s": ["sh", "s"],
+                "zh": ["z", "zh"],
+                "ch": ["c", "ch"],
+                "sh": ["s", "sh"],
+                "ang": ["an", "ang"], // 前后鼻音不分
+                "eng": ["en", "eng"],
+                "ing": ["in", "ing"],
+                "an": ["ang", "an"],
+                "en": ["eng", "en"],
+                "in": ["ing", "in"]
             }
         };
 
@@ -301,14 +338,98 @@
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = 'zh-CN';
-            recognition.maxAlternatives = 1;
+            recognition.maxAlternatives = 5; // 增加识别备选结果
+            return recognition;
+        }
 
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript.trim();
-                handleVoiceInput(transcript);
+        // 开始答题
+        function startQuiz() {
+            currentQuiz.totalQuestions = equipmentList.length;
+            currentQuiz.remainingEquipments = [...equipmentList].sort(() => Math.random() - 0.5);
+            currentQuiz.score = 0;
+            currentQuiz.answeredQuestions = 0;
+            
+            if (!currentQuiz.micPermissionGranted) {
+                currentQuiz.recognition = initSpeechRecognition();
+                if (!currentQuiz.recognition) return;
+                currentQuiz.micPermissionGranted = true;
+                elements.micPermissionNote.style.display = 'none';
+            }
+
+            elements.startScreen.classList.add('hidden');
+            elements.quizScreen.classList.remove('hidden');
+            updateScoreDisplay();
+            showNextQuestion();
+        }
+
+        // 展示下一题
+        function showNextQuestion() {
+            if (currentQuiz.remainingEquipments.length === 0) {
+                endQuiz();
+                return;
+            }
+
+            currentQuiz.currentEquipment = currentQuiz.remainingEquipments.pop();
+            currentQuiz.answeredQuestions++;
+            currentQuiz.remainingTime = 15;
+            
+            elements.equipmentImg.src = currentQuiz.currentEquipment.imageUrl;
+            elements.equipmentImg.alt = currentQuiz.currentEquipment.name;
+            elements.questionNumber.textContent = `第${currentQuiz.answeredQuestions}题 / 共${currentQuiz.totalQuestions}题`;
+            elements.timerCountdown.textContent = currentQuiz.remainingTime;
+            elements.timerCountdown.classList.remove('timer-countdown');
+            
+            updateStatus("请点击开始录音按钮，说出器材名称", "info");
+            updateScoreDisplay();
+            updateProgressBar();
+            startTimer();
+        }
+
+        // 启动答题计时器
+        function startTimer() {
+            if (currentQuiz.timer) clearInterval(currentQuiz.timer);
+            
+            currentQuiz.timer = setInterval(() => {
+                currentQuiz.remainingTime--;
+                elements.timerCountdown.textContent = currentQuiz.remainingTime;
+                
+                if (currentQuiz.remainingTime <= 5) {
+                    elements.timerCountdown.classList.add('timer-countdown');
+                }
+                
+                if (currentQuiz.remainingTime <= 0) {
+                    clearInterval(currentQuiz.timer);
+                    updateStatus(`时间到！正确答案是：${currentQuiz.currentEquipment.name}`, 'warning');
+                    setTimeout(showNextQuestion, 2000);
+                }
+            }, 1000);
+        }
+
+        // 开始录音
+        function startRecording() {
+            if (!currentQuiz.recognition) return;
+            
+            currentQuiz.isRecording = true;
+            currentQuiz.recognition.start();
+            updateStatus("正在录音，请说出器材名称...", "info");
+
+            currentQuiz.recognition.onresult = function(event) {
+                // 遍历所有识别备选结果，只要有一个匹配就算对
+                for (let i = 0; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript.trim();
+                    console.log(`识别结果${i+1}: ${transcript}`);
+                    
+                    const isCorrect = fuzzyMatch(transcript, currentQuiz.currentEquipment.name, currentQuiz.currentEquipment.synonyms);
+                    if (isCorrect) {
+                        handleVoiceInput(transcript, true);
+                        return;
+                    }
+                }
+                // 所有结果都不匹配
+                handleVoiceInput(event.results[0][0].transcript.trim(), false);
             };
 
-            recognition.onerror = function(event) {
+            currentQuiz.recognition.onerror = function(event) {
                 console.error('语音识别错误:', event.error);
                 let errorMsg = '';
                 switch(event.error) {
@@ -325,178 +446,80 @@
                 stopRecording();
             };
 
-            recognition.onend = function() {
-                if (currentQuiz.isRecording) {
-                    startRecording(); // 自动重新开始录音
-                }
+            currentQuiz.recognition.onend = function() {
+                if (currentQuiz.isRecording) startRecording();
             };
-
-            return recognition;
-        }
-
-        // 开始答题
-        function startQuiz() {
-            // 初始化答题状态
-            currentQuiz.totalQuestions = equipmentList.length;
-            currentQuiz.remainingEquipments = [...equipmentList].sort(() => Math.random() - 0.5);
-            currentQuiz.score = 0;
-            currentQuiz.answeredQuestions = 0;
-            
-            // 仅在未授权麦克风时初始化语音识别
-            if (!currentQuiz.micPermissionGranted) {
-                currentQuiz.recognition = initSpeechRecognition();
-                if (!currentQuiz.recognition) return;
-                currentQuiz.micPermissionGranted = true;
-                elements.micPermissionNote.style.display = 'none'; // 隐藏麦克风权限提示
-            }
-
-            // 更新UI
-            elements.startScreen.classList.add('hidden');
-            elements.quizScreen.classList.remove('hidden');
-            updateScoreDisplay();
-            showNextQuestion();
-        }
-
-        // 展示下一题
-        function showNextQuestion() {
-            if (currentQuiz.remainingEquipments.length === 0) {
-                endQuiz();
-                return;
-            }
-
-            currentQuiz.currentEquipment = currentQuiz.remainingEquipments.pop();
-            currentQuiz.answeredQuestions++;
-            currentQuiz.remainingTime = 15; // 重置答题时间
-            
-            // 更新UI
-            elements.equipmentImg.src = currentQuiz.currentEquipment.imageUrl;
-            elements.equipmentImg.alt = currentQuiz.currentEquipment.name;
-            elements.questionNumber.textContent = `第${currentQuiz.answeredQuestions}题 / 共${currentQuiz.totalQuestions}题`;
-            elements.timerCountdown.textContent = currentQuiz.remainingTime;
-            elements.timerCountdown.classList.remove('timer-countdown');
-            
-            updateStatus("请点击开始录音按钮，说出器材名称", "info");
-            updateScoreDisplay();
-            updateProgressBar();
-            
-            // 启动答题计时器
-            startTimer();
-        }
-
-        // 启动答题计时器
-        function startTimer() {
-            // 清除之前的计时器
-            if (currentQuiz.timer) {
-                clearInterval(currentQuiz.timer);
-            }
-            
-            // 每秒钟更新一次时间
-            currentQuiz.timer = setInterval(() => {
-                currentQuiz.remainingTime--;
-                elements.timerCountdown.textContent = currentQuiz.remainingTime;
-                
-                // 剩余5秒时添加动画效果
-                if (currentQuiz.remainingTime <= 5) {
-                    elements.timerCountdown.classList.add('timer-countdown');
-                }
-                
-                // 时间到，自动跳转到下一题
-                if (currentQuiz.remainingTime <= 0) {
-                    clearInterval(currentQuiz.timer);
-                    updateStatus(`时间到！正确答案是：${currentQuiz.currentEquipment.name}`, 'warning');
-                    setTimeout(showNextQuestion, 2000);
-                }
-            }, 1000);
-        }
-
-        // 开始录音
-        function startRecording() {
-            if (!currentQuiz.recognition) return;
-            
-            currentQuiz.isRecording = true;
-            currentQuiz.recognition.start();
-            updateStatus("正在录音，请说出器材名称...", "info");
         }
 
         // 停止录音
         function stopRecording() {
             if (!currentQuiz.recognition) return;
-            
             currentQuiz.isRecording = false;
             currentQuiz.recognition.stop();
         }
 
-        // 处理语音输入 - 新增拼音相似度匹配
-        function handleVoiceInput(transcript) {
+        // 处理语音输入
+        function handleVoiceInput(transcript, isCorrect) {
             stopRecording();
-            clearInterval(currentQuiz.timer); // 清除计时器
+            clearInterval(currentQuiz.timer);
             
             const correctAnswer = currentQuiz.currentEquipment.name;
-            const synonyms = currentQuiz.currentEquipment.synonyms;
-            
-            // 使用拼音相似度匹配算法
-            const isCorrect = fuzzyMatch(transcript, correctAnswer, synonyms);
             
             if (isCorrect) {
-                currentQuiz.score += 5; // 每题5分
+                currentQuiz.score += 5;
                 updateStatus(`回答正确！你说的是：${transcript}`, "success");
             } else {
                 updateStatus(`回答错误。正确答案是：${correctAnswer}，你说的是：${transcript}`, "error");
             }
 
-            // 延迟显示下一题
             setTimeout(showNextQuestion, 2000);
         }
 
-        // 模糊匹配算法 - 支持拼音相似度匹配
+        // 模糊匹配算法 - 优化版
         function fuzzyMatch(transcript, correctAnswer, synonyms) {
-            // 先检查精确匹配
-            if (transcript.includes(correctAnswer)) {
-                return true;
-            }
+            // 1. 忽略大小写和特殊字符
+            const cleanTranscript = transcript.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
+            const cleanAnswer = correctAnswer.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
             
-            // 检查同义词匹配
+            // 2. 精确匹配
+            if (cleanTranscript.includes(cleanAnswer)) return true;
+            
+            // 3. 同义词匹配
             for (const synonym of synonyms) {
-                if (transcript.includes(synonym)) {
-                    return true;
-                }
+                const cleanSynonym = synonym.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
+                if (cleanTranscript.includes(cleanSynonym)) return true;
             }
             
-            // 拼音相似度匹配
-            const transcriptPinyin = chineseToPinyin(transcript);
-            const answerPinyin = chineseToPinyin(correctAnswer);
+            // 4. 拼音相似度匹配
+            const transcriptPinyin = chineseToPinyin(cleanTranscript);
+            const answerPinyin = chineseToPinyin(cleanAnswer);
             
-            // 计算拼音相似度
             const similarity = calculatePinyinSimilarity(transcriptPinyin, answerPinyin);
             console.log(`拼音相似度: ${similarity.toFixed(2)}`);
             
-            // 如果相似度超过阈值，则判定为正确
-            if (similarity >= currentQuiz.matchThreshold) {
-                return true;
-            }
+            if (similarity >= currentQuiz.matchThreshold) return true;
             
-            // 检查同义词的拼音相似度
+            // 5. 同义词拼音相似度匹配
             for (const synonym of synonyms) {
-                const synonymPinyin = chineseToPinyin(synonym);
+                const cleanSynonym = synonym.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
+                const synonymPinyin = chineseToPinyin(cleanSynonym);
                 const synonymSimilarity = calculatePinyinSimilarity(transcriptPinyin, synonymPinyin);
-                if (synonymSimilarity >= currentQuiz.matchThreshold) {
-                    return true;
-                }
+                if (synonymSimilarity >= currentQuiz.matchThreshold) return true;
             }
             
-            // 同音词匹配
-            if (homophoneMatch(transcript, correctAnswer)) {
-                return true;
-            }
+            // 6. 同音词匹配
+            if (homophoneMatch(cleanTranscript, cleanAnswer)) return true;
+            
+            // 7. 方言发音匹配
+            if (dialectMatch(transcriptPinyin, answerPinyin)) return true;
             
             return false;
         }
 
-        // 中文转拼音简化版（实际项目建议使用pinyin.js库）
+        // 中文转拼音优化版
         function chineseToPinyin(text) {
-            // 简化的中文转拼音映射，实际项目建议使用专业的拼音转换库
             const pinyinMap = {
-                '抽': 'chou', '滤': 'lü', '瓶': 'ping',
+                '抽': 'chou', '滤': 'lv', '瓶': 'ping',
                 '带': 'dai', '木': 'mu', '柄': 'bing',
                 '软': 'ruan', '橡': 'xiang', '胶': 'jiao',
                 '球': 'qiu', '导': 'dao', '线': 'xian',
@@ -506,12 +529,12 @@
                 '棒': 'bang', '玻': 'bo', '璃': 'li',
                 '抹': 'mo', '布': 'bu', '块': 'kuai',
                 '片': 'pian', '气': 'qi', '烧': 'shao',
-                '杯': 'bei', '手': 'shou', '电': 'dian',
-                '筒': 'tong', '水': 'shui', '槽': 'cao',
-                '塑': 'su', '料': 'liao', '铜': 'tong',
-                '洗': 'xi', '小': 'xiao', '灯': 'deng',
-                '泡': 'pao', '药': 'yao', '勺': 'shao',
-                '音': 'yin', '叉': 'cha'
+                '杯': 'bei', '手': 'shou', '筒': 'tong',
+                '水': 'shui', '槽': 'cao', '塑': 'su',
+                '料': 'liao', '铜': 'tong', '洗': 'xi',
+                '小': 'xiao', '灯': 'deng', '泡': 'pao',
+                '药': 'yao', '勺': 'shao', '音': 'yin',
+                '叉': 'cha'
             };
             
             let pinyin = '';
@@ -522,38 +545,34 @@
             return pinyin.toLowerCase();
         }
 
-        // 计算拼音相似度（使用编辑距离算法）
+        // 拼音相似度计算优化版
         function calculatePinyinSimilarity(pinyin1, pinyin2) {
+            // 短文本优先匹配
+            if (pinyin1.length <= 2 || pinyin2.length <= 2) {
+                return pinyin1.includes(pinyin2) || pinyin2.includes(pinyin1) ? 1 : 0;
+            }
+            
             const len1 = pinyin1.length;
             const len2 = pinyin2.length;
-            
-            // 创建二维数组存储编辑距离
             const dp = Array(len1 + 1).fill().map(() => Array(len2 + 1).fill(0));
             
-            // 初始化边界
-            for (let i = 0; i <= len1; i++) {
-                dp[i][0] = i;
-            }
-            for (let j = 0; j <= len2; j++) {
-                dp[0][j] = j;
-            }
+            for (let i = 0; i <= len1; i++) dp[i][0] = i;
+            for (let j = 0; j <= len2; j++) dp[0][j] = j;
             
-            // 计算编辑距离
             for (let i = 1; i <= len1; i++) {
                 for (let j = 1; j <= len2; j++) {
                     if (pinyin1[i - 1] === pinyin2[j - 1]) {
                         dp[i][j] = dp[i - 1][j - 1];
                     } else {
                         dp[i][j] = Math.min(
-                            dp[i - 1][j] + 1,    // 删除
-                            dp[i][j - 1] + 1,    // 插入
-                            dp[i - 1][j - 1] + 1 // 替换
+                            dp[i - 1][j] + 1,
+                            dp[i][j - 1] + 1,
+                            dp[i - 1][j - 1] + 1
                         );
                     }
                 }
             }
             
-            // 计算相似度
             const maxLen = Math.max(len1, len2);
             const similarity = 1 - dp[len1][len2] / maxLen;
             
@@ -562,24 +581,57 @@
 
         // 同音词匹配
         function homophoneMatch(transcript, correctAnswer) {
-            // 检查每个字符是否有同音词匹配
             for (const char of transcript) {
                 if (currentQuiz.homophoneMap[char]) {
                     for (const homophone of currentQuiz.homophoneMap[char]) {
-                        if (correctAnswer.includes(homophone)) {
-                            return true;
-                        }
+                        if (correctAnswer.includes(homophone)) return true;
                     }
+                }
+            }
+            return false;
+        }
+
+        // 新增方言发音匹配
+        function dialectMatch(pinyin1, pinyin2) {
+            // 生成所有可能的方言变体
+            const variants1 = generateDialectVariants(pinyin1);
+            const variants2 = generateDialectVariants(pinyin2);
+            
+            // 检查任意变体是否匹配
+            for (const v1 of variants1) {
+                for (const v2 of variants2) {
+                    const similarity = calculatePinyinSimilarity(v1, v2);
+                    if (similarity >= currentQuiz.matchThreshold) return true;
                 }
             }
             
             return false;
         }
 
+        // 生成方言变体
+        function generateDialectVariants(pinyin) {
+            let variants = new Set([pinyin]);
+            
+            // 遍历所有方言映射
+            for (const [original, alternatives] of Object.entries(currentQuiz.dialectMap)) {
+                const newVariants = new Set();
+                
+                for (const variant of variants) {
+                    for (const alt of alternatives) {
+                        newVariants.add(variant.replace(new RegExp(original, 'g'), alt));
+                    }
+                }
+                
+                variants = new Set([...variants, ...newVariants]);
+            }
+            
+            return Array.from(variants);
+        }
+
         // 跳过题目
         function skipQuestion() {
             stopRecording();
-            clearInterval(currentQuiz.timer); // 清除计时器
+            clearInterval(currentQuiz.timer);
             updateStatus(`已跳过此题，正确答案是：${currentQuiz.currentEquipment.name}`, "info");
             setTimeout(showNextQuestion, 2000);
         }
@@ -605,16 +657,13 @@
         // 结束答题
         function endQuiz() {
             stopRecording();
-            if (currentQuiz.timer) {
-                clearInterval(currentQuiz.timer); // 清除计时器
-            }
+            if (currentQuiz.timer) clearInterval(currentQuiz.timer);
             
             elements.quizScreen.classList.add('hidden');
             elements.endScreen.classList.remove('hidden');
             
             elements.finalScore.textContent = Math.round(currentQuiz.score);
             
-            // 生成结果评价
             let resultText = '';
             if (currentQuiz.score >= 90) {
                 resultText = '优秀！你对实验器材非常熟悉';
@@ -634,7 +683,6 @@
             elements.startScreen.classList.remove('hidden');
             elements.progressFill.style.width = '0%';
             
-            // 保留麦克风权限状态
             currentQuiz = {
                 remainingEquipments: [],
                 currentEquipment: null,
@@ -642,15 +690,15 @@
                 totalQuestions: 20,
                 answeredQuestions: 0,
                 isRecording: false,
-                recognition: currentQuiz.recognition, // 保留已初始化的语音识别对象
+                recognition: currentQuiz.recognition,
                 timer: null,
                 remainingTime: 15,
-                micPermissionGranted: currentQuiz.micPermissionGranted, // 保留麦克风权限状态
-                matchThreshold: 0.6,
-                homophoneMap: currentQuiz.homophoneMap
+                micPermissionGranted: currentQuiz.micPermissionGranted,
+                matchThreshold: 0.5,
+                homophoneMap: currentQuiz.homophoneMap,
+                dialectMap: currentQuiz.dialectMap
             };
             
-            // 如果已授权麦克风，隐藏提示信息
             if (currentQuiz.micPermissionGranted) {
                 elements.micPermissionNote.style.display = 'none';
             }
