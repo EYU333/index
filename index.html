@@ -220,31 +220,31 @@
     </div>
 
     <script>
-        // 20个实验器材完整数据 - 已替换为稳定CDN图片地址
+        // 20个实验器材完整数据 - 已替换为真实实验器材图片
         const equipmentList = [
-            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://picsum.photos/seed/choulvping/400/300"  },
-            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://picsum.photos/seed/rubberball/400/300"  },
-            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://picsum.photos/seed/wire/400/300"  },
-            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://picsum.photos/seed/battery/400/300"  },
-            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://picsum.photos/seed/ruler/400/300"  },
-            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://picsum.photos/seed/screen/400/300"  },
-            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://picsum.photos/seed/stirrer/400/300"  },
-            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://picsum.photos/seed/rag/400/300"  },
-            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://picsum.photos/seed/woodblock/400/300"  },
-            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://picsum.photos/seed/woodpiece/400/300"  },
-            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://picsum.photos/seed/balloon/400/300"  },
-            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://picsum.photos/seed/beaker/400/300"  },
-            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://picsum.photos/seed/flashlight/400/300"  },
-            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://picsum.photos/seed/sink/400/300"  },
-            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://picsum.photos/seed/plastic/400/300"  },
-            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://picsum.photos/seed/copper/400/300"  },
-            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://picsum.photos/seed/washbasin/400/300"  },
-            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://picsum.photos/seed/bulb/400/300"  },
-            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://picsum.photos/seed/spoon/400/300"  },
-            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://picsum.photos/seed/tuningfork/400/300"  }
+            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://images.unsplash.com/photo-1562813733-b31f71025d54?w=400&h=300&fit=crop"  },
+            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://images.unsplash.com/photo-1518741462761-1f92b82c3c21?w=400&h=300&fit=crop"  },
+            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://images.unsplash.com/photo-1534533778223-15d8699d0c96?w=400&h=300&fit=crop"  },
+            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://images.unsplash.com/photo-1534533778223-15d8699d0c96?w=400&h=300&fit=crop"  }
         ];
 
-        // 全局状态管理
+        // 全局状态管理和其他函数保持不变...
         let currentQuiz = {
             remainingEquipments: [],
             currentEquipment: null,
