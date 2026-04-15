@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>实验器材语音识别 · 平板专业版</title>
+    <title>实验器材语音识别 · 平板专用版</title>
     <style>
         * {
             margin: 0;
@@ -209,7 +209,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>🧪 实验器材语音答题</h1>
+        <h1>🧪 实验器材语音答题 · 平板优化</h1>
         <p>20种器材 · 每题5分 · 普通话说出名称</p>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
@@ -222,8 +222,8 @@
         <!-- 启动界面 -->
         <div id="start-screen">
             <h2>🎙️ 平板智能语音答题</h2>
-            <p style="margin: 0.8rem 0;">点击开始后仅需授权麦克风一次，后续全程免弹窗<br>直接说话即可识别</p>
-            <div id="mic-status-badge" class="mic-badge">⚙️ 准备就绪，点击“开始答题”授权麦克风</div>
+            <p style="margin: 0.8rem 0;">点击「开始答题」授权麦克风一次，之后全程免弹窗<br>直接点击「开始录音」说话即可识别</p>
+            <div id="mic-status-badge" class="mic-badge">⚙️ 准备就绪，点击下方按钮授权麦克风</div>
             <button class="control-btn" id="start-quiz-btn" style="background:#27ae60; box-shadow:0 5px 0 #1e6f3f;">🔊 开始答题</button>
         </div>
 
@@ -249,7 +249,7 @@
 </div>
 
 <script>
-    // ---------- 20个器材数据 (同义词已优化) ----------
+    // ---------- 20个器材数据 (同义词优化) ----------
     const equipmentList = [
         { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://eyu333.github.io/index/images/抽滤瓶.jpg" },
         { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://eyu333.github.io/index/images/带木柄的软橡胶球.jpg" },
@@ -286,7 +286,7 @@
         recognition: null,
         mediaStream: null,       // 保持麦克风活跃，避免重复授权弹窗
         micAuthorized: false,
-        canRecord: false
+        isQuizActive: false
     };
 
     // DOM 元素
@@ -332,51 +332,49 @@
         }
     }
 
-    // 彻底停止录音 (如果正在录音)
+    // 停止录音 (如果正在录音)
     function abortSpeech() {
         if (quiz.isRecording && quiz.recognition) {
             try {
                 quiz.recognition.abort();
-            } catch(e) { /* ignore */ }
+            } catch(e) { /* 静默处理 */ }
             quiz.isRecording = false;
         }
-        // 移除按钮动画样式
         if (dom.recordBtn) dom.recordBtn.classList.remove('recording-active');
     }
 
-    // 释放音频流(保留授权状态, 但为了可靠我们保留stream不释放，但某些浏览器需要保持)
-    // 改进: 我们不释放stream，让它持续存在以保证麦克风一直可用且不再弹窗
-    async function requestMicrophonePersistent() {
-        if (quiz.mediaStream && quiz.mediaStream.active) {
-            // 已有活跃流，直接可用
+    // 核心：请求麦克风权限并保持活跃流 (用于平板免二次弹窗)
+    async function requestAndKeepMicrophone() {
+        // 如果已有活跃流，直接返回 true
+        if (quiz.mediaStream && quiz.mediaStream.active && quiz.mediaStream.getAudioTracks().some(t => t.enabled)) {
             quiz.micAuthorized = true;
-            if (dom.micBadge) dom.micBadge.innerHTML = '✅ 麦克风已授权 · 可直接录音';
+            if (dom.micBadge) dom.micBadge.innerHTML = '✅ 麦克风已就绪 · 可直接录音';
             return true;
         }
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            quiz.mediaStream = stream;   // 保持流活跃，永不停止，确保后续录音无弹窗
+            // 保持流，但不关闭，确保后续录音无额外授权弹窗
+            quiz.mediaStream = stream;
             quiz.micAuthorized = true;
-            if (dom.micBadge) dom.micBadge.innerHTML = '✅ 麦克风已就绪 · 全程免弹窗';
+            if (dom.micBadge) dom.micBadge.innerHTML = '✅ 麦克风授权成功 · 全程免弹窗';
             return true;
         } catch (err) {
-            console.error("麦克风授权失败", err);
-            let errMsg = '麦克风授权失败，请检查权限并刷新页面重新允许麦克风';
-            if (err.name === 'NotAllowedError') errMsg = '❌ 您拒绝了麦克风权限，请点击地址栏图标允许麦克风后刷新页面';
+            console.error("麦克风授权失败:", err);
+            let errMsg = '麦克风授权失败，请检查系统设置允许麦克风权限后刷新页面';
+            if (err.name === 'NotAllowedError') errMsg = '❌ 您拒绝了麦克风权限，请在浏览器设置中允许麦克风后刷新';
             if (dom.micBadge) dom.micBadge.innerHTML = errMsg;
             updateStatusMessage(errMsg, 'error');
             return false;
         }
     }
 
-    // 初始化语音识别实例 (需要配合已授权麦克风)
+    // 初始化语音识别实例 (每次开始答题时重新创建，确保干净)
     function initRecognition() {
         if (!('webkitSpeechRecognition' in window)) {
-            alert("当前浏览器不支持语音识别，请使用Chrome/Edge/Safari 或升级系统");
+            alert("当前浏览器不支持语音识别，请使用 Chrome / Edge / Safari 并确保系统允许麦克风");
             return false;
         }
         if (quiz.recognition) {
-            // 避免重复创建，但需要重新绑定事件
             try { quiz.recognition.abort(); } catch(e) {}
         }
         const recognition = new webkitSpeechRecognition();
@@ -393,7 +391,7 @@
 
         recognition.onresult = (event) => {
             let transcript = "";
-            if (event.results.length > 0) {
+            if (event.results.length > 0 && event.results[0][0]) {
                 transcript = event.results[0][0].transcript.trim();
             }
             if (transcript === "") {
@@ -401,32 +399,31 @@
                 abortSpeech();
                 return;
             }
-            // 识别成功，停止录音并判题
-            abortSpeech();      // 停止录音
+            // 识别成功，停止计时器并判题
+            abortSpeech();      // 停止录音UI
             stopTimer();
             evaluateAnswer(transcript);
         };
 
         recognition.onerror = (event) => {
-            console.warn("识别错误:", event.error);
+            console.warn("语音识别错误:", event.error);
             let errorText = "";
             switch (event.error) {
-                case 'no-speech': errorText = "未检测到语音，请重新点击录音"; break;
-                case 'audio-capture': errorText = "麦克风不可用，请检查是否被占用"; break;
-                case 'not-allowed': errorText = "麦克风权限被阻止，请手动允许并刷新"; break;
+                case 'no-speech': errorText = "未检测到语音，请重新点击录音并大声说出"; break;
+                case 'audio-capture': errorText = "麦克风不可用，请检查是否被其他应用占用"; break;
+                case 'not-allowed': errorText = "麦克风权限被阻止，请重新授权后刷新页面"; break;
                 default: errorText = `识别失败: ${event.error}`;
             }
             updateStatusMessage(errorText, "error");
             quiz.isRecording = false;
             if (dom.recordBtn) dom.recordBtn.classList.remove('recording-active');
-            // 如果权限问题导致，标记重新授权需求
             if (event.error === 'not-allowed') quiz.micAuthorized = false;
         };
 
         recognition.onend = () => {
             quiz.isRecording = false;
             if (dom.recordBtn) dom.recordBtn.classList.remove('recording-active');
-            // 注意：不自动重启录音，等待用户再次点击
+            // 不自动重启，等待用户再次点击录音按钮
         };
 
         quiz.recognition = recognition;
@@ -473,7 +470,7 @@
         quiz.answeredCount++;
         quiz.remainSec = 15;
 
-        // 更新图片和UI
+        // 更新界面
         dom.equipmentImg.src = quiz.current.imageUrl;
         dom.equipmentImg.alt = quiz.current.name;
         dom.questionNumber.textContent = `第${quiz.answeredCount}题 / 共${quiz.total}题`;
@@ -490,7 +487,6 @@
         stopTimer();
         quiz.timerId = setInterval(() => {
             if (quiz.remainSec <= 1) {
-                // 时间到
                 stopTimer();
                 abortSpeech();
                 if (quiz.current) {
@@ -509,7 +505,7 @@
         }, 1000);
     }
 
-    // 结束考试
+    // 结束答题
     function finishQuiz() {
         stopTimer();
         abortSpeech();
@@ -523,9 +519,10 @@
         else if (finalScoreVal >= 60) comment = "📚 合格，多加练习会更棒";
         else comment = "💪 需要加强记忆，重新挑战吧";
         dom.resultText.textContent = comment;
+        quiz.isQuizActive = false;
     }
 
-    // 重置整个答题 (保留麦克风权限流)
+    // 重置答题 (保留麦克风流)
     function resetQuiz() {
         stopTimer();
         abortSpeech();
@@ -533,39 +530,35 @@
         dom.startScreen.classList.remove('hidden');
         dom.quizScreen.classList.add('hidden');
         dom.progressFill.style.width = "0%";
-        // 重置状态，但保留 mediaStream 和 recognition (麦克风仍授权)
+        // 重置状态，但保留 mediaStream 和 micAuthorized
         quiz.remainingList = [];
         quiz.current = null;
         quiz.score = 0;
         quiz.answeredCount = 0;
         quiz.remainSec = 15;
         quiz.isRecording = false;
+        quiz.isQuizActive = false;
         updateUI();
-        if (dom.micBadge && quiz.micAuthorized) {
+        if (quiz.micAuthorized && dom.micBadge) {
             dom.micBadge.innerHTML = '✅ 麦克风已就绪 · 可重新开始';
+        } else {
+            if (dom.micBadge) dom.micBadge.innerHTML = '🎤 点击“开始答题”重新授权麦克风';
         }
     }
 
     // 开始答题主流程 (授权 + 初始化识别 + 随机题目)
     async function startQuizFlow() {
-        // 防止重复点击
+        // 防止重复进入
         if (!dom.startScreen.classList.contains('hidden') === false) return;
-        // 1. 请求持久麦克风权限 (不弹窗后续)
-        const micOk = await requestMicrophonePersistent();
+        // 1. 请求麦克风权限 (关键：保持流，后续免弹窗)
+        const micOk = await requestAndKeepMicrophone();
         if (!micOk) {
-            updateStatusMessage("无法获取麦克风权限，请检查设置后刷新页面", "error");
+            updateStatusMessage("无法获得麦克风权限，语音答题不可用", "error");
             return;
         }
-
-        // 2. 初始化语音识别实例 (如果尚未初始化或者需要重建)
-        if (!quiz.recognition) {
-            const initOk = initRecognition();
-            if (!initOk) return;
-        } else {
-            // 确保之前的recognition没有残留监听，重新绑定事件？
-            // 简单重新创建确保稳定
-            initRecognition();
-        }
+        // 2. 初始化语音识别 (如果已有实例则重新创建确保干净)
+        const initOk = initRecognition();
+        if (!initOk) return;
 
         // 3. 随机打乱器材列表
         const shuffled = [...equipmentList];
@@ -577,6 +570,7 @@
         quiz.score = 0;
         quiz.answeredCount = 0;
         quiz.current = null;
+        quiz.isQuizActive = true;
         stopTimer();
         abortSpeech();
         updateUI();
@@ -590,40 +584,33 @@
         nextQuestion();
     }
 
-    // 录音按钮逻辑：确保麦克风活跃 + 语音识别就绪后启动
-    async function onRecordPress() {
-        if (!quiz.current) {
-            updateStatusMessage("题目未加载，请稍后", "warning");
+    // 录音按钮逻辑：平板必须保证在用户手势同步调用 recognition.start()
+    // 注意：这里不能有任何异步等待，确保立即启动
+    function onRecordPress() {
+        if (!quiz.isQuizActive || !quiz.current) {
+            updateStatusMessage("答题未开始或题目未加载，请稍后", "warning");
             return;
         }
-        // 双重确保麦克风活跃（如果之前流意外关闭，重新申请）
-        if (!quiz.mediaStream || !quiz.mediaStream.active) {
-            const reMic = await requestMicrophonePersistent();
-            if (!reMic) {
-                updateStatusMessage("麦克风失效，请刷新页面重新授权", "error");
-                return;
-            }
-            // 重新建立识别实例
-            initRecognition();
-        }
-        if (!quiz.recognition) {
-            updateStatusMessage("语音识别未就绪，请重新开始答题", "error");
+        // 检查麦克风授权标志
+        if (!quiz.micAuthorized || !quiz.recognition) {
+            updateStatusMessage("麦克风未就绪，请重新开始答题", "error");
             return;
         }
         if (quiz.isRecording) {
             updateStatusMessage("正在录音中，请稍等回答", "warning");
             return;
         }
+        // 关键：直接同步调用 start()，无任何异步操作
         try {
             quiz.recognition.start();
         } catch (err) {
-            console.warn("启动录音异常", err);
-            updateStatusMessage("启动录音失败，请重试", "error");
+            console.error("启动录音失败", err);
+            updateStatusMessage("启动录音失败，可能是麦克风资源冲突，请重试", "error");
             quiz.isRecording = false;
         }
     }
 
-    // 事件绑定 (确保平板触摸响应)
+    // 事件绑定 (平板触摸)
     function bindEvents() {
         if (dom.startBtn) dom.startBtn.addEventListener('click', startQuizFlow);
         if (dom.recordBtn) dom.recordBtn.addEventListener('click', onRecordPress);
@@ -631,7 +618,7 @@
         if (dom.resetBtn) dom.resetBtn.addEventListener('click', resetQuiz);
     }
 
-    // 浏览器兼容预检
+    // 浏览器预检
     function preCheck() {
         if (!('webkitSpeechRecognition' in window)) {
             if (dom.micBadge) dom.micBadge.innerHTML = "⚠️ 浏览器不支持语音识别，请使用Chrome/Edge/Safari";
@@ -645,10 +632,14 @@
     // 页面初始化
     bindEvents();
     preCheck();
-    // 额外优化：页面关闭时释放音频流 (可选，避免资源占用)
+
+    // 可选：页面关闭时释放音频流，避免资源占用
     window.addEventListener('beforeunload', () => {
         if (quiz.mediaStream) {
             quiz.mediaStream.getTracks().forEach(track => track.stop());
+        }
+        if (quiz.recognition) {
+            try { quiz.recognition.abort(); } catch(e) {}
         }
     });
 </script>
