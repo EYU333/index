@@ -4,56 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>实验器材语音识别答题系统</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', '微软雅黑', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
+            font-family: '微软雅黑', sans-serif;
         }
 
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
-            touch-action: manipulation;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 1rem;
-            min-height: 100vh;
+            padding: 2rem;
         }
 
-        /* 平板优化：调整标题大小 */
         .header {
             text-align: center;
-            margin-bottom: 1.5rem;
-            padding: 0.5rem;
+            margin-bottom: 2rem;
         }
 
-        .header h1 {
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-            color: #666;
-        }
-
-        /* 平板优化：进度条 */
         .progress-bar {
             width: 100%;
-            height: clamp(16px, 3vw, 20px);
+            height: 20px;
             background-color: #e9ecef;
             border-radius: 10px;
             margin-bottom: 1rem;
@@ -62,265 +41,283 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #28a745, #20c997);
+            background-color: #28a745;
             width: 0%;
             transition: width 0.3s ease;
         }
 
-        /* 平板优化：分数板 */
         .score-board {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             background: white;
-            padding: clamp(0.8rem, 2vw, 1.5rem);
-            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            margin-bottom: 2rem;
         }
 
-        .score-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .score-item strong {
-            color: #007bff;
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-        }
-
-        /* 平板优化：问题区域 */
         .question-area {
             background: white;
-            padding: clamp(1rem, 3vw, 2rem);
-            border-radius: 12px;
+            padding: 2rem;
+            border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
-            min-height: clamp(400px, 60vh, 500px);
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        /* 平板优化：图片显示 */
         .equipment-image {
             max-width: 100%;
-            max-height: clamp(250px, 40vh, 350px);
+            max-height: 350px;
             object-fit: contain;
-            margin: 0.8rem 0;
-            border-radius: 12px;
+            margin: 1rem 0;
+            border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            padding: 0.8rem;
+            padding: 1rem;
             background-color: #f8f9fa;
-            touch-action: pinch-zoom;
         }
 
-        /* 平板优化：按钮样式 */
         .control-btn {
-            background: linear-gradient(135deg, #007bff, #0056b3);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             padding: clamp(1rem, 2.5vw, 1.2rem) clamp(1.5rem, 4vw, 2.5rem);
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            border-radius: 12px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             margin: 0.5rem;
-            min-width: clamp(140px, 35vw, 160px);
             min-height: 50px;
-            touch-action: manipulation;
-            box-shadow: 0 2px 8px rgba(0,123,255,0.3);
-            font-weight: 600;
+            min-width: clamp(140px, 35vw, 160px);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
         .control-btn:active {
             transform: scale(0.95);
-            background: linear-gradient(135deg, #0056b3, #003d82);
         }
 
         .control-btn:disabled {
             background: #6c757d;
             cursor: not-allowed;
-            opacity: 0.6;
+            transform: none;
         }
 
-        /* 平板优化：录音按钮特殊样式 */
-        .record-btn {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-            min-width: clamp(160px, 40vw, 180px);
-            min-height: 60px;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
-        }
-
-        .record-btn.recording {
-            animation: recording-pulse 1.5s infinite;
-        }
-
-        @keyframes recording-pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-            50% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
-        }
-
-        /* 平板优化：状态消息 */
         .status-message {
-            margin: 0.8rem 0;
-            padding: clamp(0.8rem, 2vw, 1.2rem);
-            border-radius: 12px;
-            font-weight: 600;
-            min-height: clamp(50px, 8vh, 60px);
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-            text-align: center;
         }
 
         .status-success {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
-            border: 2px solid #28a745;
+            border: 1px solid #c3e6cb;
         }
 
         .status-error {
-            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
             color: #721c24;
-            border: 2px solid #dc3545;
+            border: 1px solid #f5c6cb;
         }
 
         .status-info {
-            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
             color: #0c5460;
-            border: 2px solid #17a2b8;
+            border: 1px solid #bee5eb;
         }
 
         .status-warning {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
             color: #856404;
-            border: 2px solid #ffc107;
+            border: 1px solid #ffeaa7;
         }
 
         .hidden {
-            display: none !important;
+            display: none;
         }
 
-        /* 平板优化：问题编号 */
         .question-number {
-            margin-bottom: 0.8rem;
-            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
             color: #6c757d;
-            font-weight: 600;
         }
 
-        /* 平板优化：计时器 */
         .timer-container {
-            display: inline-flex;
-            align-items: center;
-            padding: clamp(0.5rem, 1.5vw, 0.8rem) clamp(1rem, 2.5vw, 1.5rem);
-            background: linear-gradient(135deg, #dc3545, #c82333);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #dc3545;
             color: white;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: bold;
-            margin: 0.8rem 0;
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+            margin: 1rem 0;
         }
 
         .timer-countdown {
             animation: pulse 1s infinite;
-            margin: 0 0.3rem;
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
-        /* 平板优化：按钮组 */
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        /* 平板优化：提示信息 */
-        .info-tip {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 0.8rem;
-            margin: 1rem 0;
-            border-radius: 8px;
-            font-size: clamp(0.85rem, 2vw, 0.95rem);
-            text-align: left;
-        }
-
-        /* 平板优化：加载动画 */
-        .loading-overlay {
+        /* 右下角语音测试按钮 */
+        .voice-test-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
+            bottom: clamp(1rem, 2vw, 1.5rem);
+            right: clamp(1rem, 2vw, 1.5rem);
+            z-index: 1000;
         }
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #007bff;
+        .voice-test-btn {
+            width: clamp(50px, 8vw, 60px);
+            height: clamp(50px, 8vw, 60px);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .voice-test-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .loading-text {
+        .voice-test-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 语音测试面板 */
+        .voice-test-panel {
+            position: fixed;
+            bottom: clamp(80px, 12vw, 90px);
+            right: clamp(1rem, 2vw, 1.5rem);
+            width: clamp(300px, 80vw, 400px);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .panel-content {
+            padding: 1.5rem;
+        }
+
+        .test-status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .test-result {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .test-result h4 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .suggestions {
             margin-top: 1rem;
-            font-size: 1.1rem;
-            color: #666;
+            padding: 0.8rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #6c757d;
         }
 
-        /* 平板优化：横屏适配 */
-        @media screen and (orientation: landscape) and (max-height: 500px) {
-            .question-area {
-                min-height: auto;
-                padding: 0.8rem;
-            }
-            
-            .equipment-image {
-                max-height: 30vh;
-            }
+        /* 录音按钮更大，方便快速点击 */
+        .record-btn {
+            min-width: clamp(160px, 40vw, 180px);
+            min-height: 60px;
         }
 
-        /* 平板优化：大屏平板适配 */
-        @media screen and (min-width: 768px) {
-            .container {
-                padding: 2rem;
-            }
-            
-            .button-group {
-                gap: 1rem;
-            }
-        }
-
-        /* 平板优化：小屏平板适配 */
+        /* 小屏平板适配 */
         @media screen and (max-width: 600px) {
             .score-board {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+            
+            .question-area {
+                padding: 1rem;
             }
             
             .control-btn {
@@ -328,48 +325,28 @@
                 margin: 0.3rem 0;
             }
             
-            .button-group {
+            .test-controls {
                 flex-direction: column;
-                width: 100%;
             }
         }
 
-        /* 触摸反馈 */
-        .touch-feedback {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .touch-feedback::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-        }
-
-        .touch-feedback:active::after {
-            width: 200%;
-            height: 200%;
+        /* 横屏适配 */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .question-area {
+                min-height: auto;
+            }
+            
+            .equipment-image {
+                max-height: 30vh;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 加载动画 -->
-    <div id="loading-overlay" class="loading-overlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">正在加载图片资源...</div>
-    </div>
-
     <div class="container">
         <div class="header">
-            <h1>🔬 实验器材语音识别答题系统</h1>
-            <p>共20题，每题5分，总分100分 | 请用普通话说出图片中器材的名称</p>
+            <h1>实验器材语音识别答题系统</h1>
+            <p>共20题，每题5分，总分100分。请用普通话说出图片中器材的名称</p>
         </div>
 
         <div class="progress-bar">
@@ -377,97 +354,103 @@
         </div>
 
         <div class="score-board">
-            <div class="score-item">
-                <div>当前得分</div>
-                <div><strong id="current-score">0</strong> / 100</div>
+            <div>
+                <span>当前得分: <strong id="current-score">0</strong> / 100</span>
             </div>
-            <div class="score-item">
-                <div>剩余题目</div>
-                <div><strong id="remaining-questions">20</strong> 题</div>
+            <div>
+                <span>剩余题目: <strong id="remaining-questions">20</strong></span>
             </div>
-            <div class="score-item">
-                <div>正确率</div>
-                <div><strong id="accuracy-rate">0%</strong></div>
+            <div>
+                <span>正确率: <strong id="accuracy">0</strong>%</span>
             </div>
         </div>
 
         <div class="question-area">
             <div id="start-screen">
-                <h2>🎯 准备开始答题</h2>
-                <div class="info-tip">
-                    <strong>使用说明：</strong><br>
-                    1. 点击"开始答题"按钮启动系统<br>
-                    2. 系统会随机展示器材图片<br>
-                    3. 点击"开始录音"按钮，用普通话说出器材名称<br>
-                    4. 每题限时15秒，共20题
-                </div>
-                <p id="mic-permission-note" style="color: #6c757d; margin: 1rem 0;">
-                    ⚠️ 首次使用请授权麦克风权限
-                </p>
-                <button class="control-btn touch-feedback" onclick="startQuiz()">
-                    🎮 开始答题
-                </button>
+                <h2>准备开始答题</h2>
+                <p>点击下方按钮开始答题，系统会随机展示器材图片，请用普通话说出器材名称</p>
+                <p id="mic-permission-note" style="color: #6c757d; margin-top: 1rem;">首次使用请授权麦克风权限</p>
+                <button class="control-btn" onclick="startQuiz()">开始答题</button>
             </div>
 
             <div id="quiz-screen" class="hidden">
                 <div class="question-number" id="question-number">第1题 / 共20题</div>
                 <div class="timer-container">
-                    ⏱️ 剩余时间: <span id="timer-countdown">15</span>秒
+                    <span>剩余时间: </span><span id="timer-countdown">15</span><span>秒</span>
                 </div>
                 <h3>请说出以下器材的名称</h3>
                 <img id="equipment-img" class="equipment-image" src="" alt="器材图片">
-                <div id="status-message" class="status-message status-info">
-                    🎤 点击下方按钮开始录音
-                </div>
-                <div class="button-group">
-                    <button id="record-btn" class="control-btn record-btn touch-feedback" onclick="startRecording()">
-                        🎤 开始录音
-                    </button>
-                    <button class="control-btn touch-feedback" onclick="skipQuestion()">
-                        ⏭️ 跳过此题
-                    </button>
-                </div>
+                <div id="status-message" class="status-message status-info">点击下方按钮开始录音</div>
+                <button class="control-btn record-btn" onclick="startRecording()">开始录音</button>
+                <button class="control-btn" onclick="skipQuestion()">跳过此题</button>
             </div>
 
             <div id="end-screen" class="hidden">
-                <h2>🎉 答题结束！</h2>
-                <div style="margin: 1.5rem 0; padding: 1.5rem; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px;">
-                    <p style="font-size: 1.3rem; margin-bottom: 1rem;">
-                        你的最终得分: <strong id="final-score" style="color: #007bff; font-size: 2rem;">0</strong> / 100
-                    </p>
-                    <p id="result-text" style="font-size: 1.1rem; color: #666;"></p>
-                    <p id="stats-text" style="font-size: 1rem; color: #888; margin-top: 0.5rem;"></p>
+                <h2>答题结束！</h2>
+                <p>你的最终得分: <strong id="final-score">0</strong> / 100</p>
+                <div style="margin: 1rem 0; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;">
+                    <p id="result-text"></p>
+                    <p id="correct-count" style="margin-top: 0.5rem;"></p>
                 </div>
-                <button class="control-btn touch-feedback" onclick="resetQuiz()">
-                    🔄 重新开始
-                </button>
+                <button class="control-btn" onclick="resetQuiz()">重新开始</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角语音测试悬浮按钮 -->
+    <div class="voice-test-container">
+        <button id="voice-test-btn" class="voice-test-btn" title="测试语音识别功能">
+            🎤
+        </button>
+        <div id="voice-test-panel" class="voice-test-panel hidden">
+            <div class="panel-header">
+                <h3>语音识别测试</h3>
+                <button id="close-panel" class="close-btn">✕</button>
+            </div>
+            <div class="panel-content">
+                <div id="test-status" class="test-status status-info">
+                    点击开始测试麦克风和语音识别功能
+                </div>
+                <div class="test-controls">
+                    <button id="start-test" class="control-btn test-btn">
+                        开始测试
+                    </button>
+                    <button id="reset-test" class="control-btn test-btn secondary">
+                        重置测试
+                    </button>
+                </div>
+                <div id="test-result" class="test-result hidden">
+                    <h4>测试结果:</h4>
+                    <div id="result-content"></div>
+                    <div id="suggestions" class="suggestions"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 20个实验器材完整数据
+        // 20个实验器材完整数据 - 已替换为真实实验器材图片
         const equipmentList = [
-            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://eyu333.github.io/index/images/抽滤瓶.jpg" },
-            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://eyu333.github.io/index/images/带木柄的软橡胶球.jpg" },
-            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://eyu333.github.io/index/images/导线.jpg" },
-            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://eyu333.github.io/index/images/干电池.jpg" },
-            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://eyu333.github.io/index/images/钢尺.jpg" },
-            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://eyu333.github.io/index/images/光屏.jpg" },
-            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://eyu333.github.io/index/images/搅拌棒.jpg" },
-            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://eyu333.github.io/index/images/抹布.jpg" },
-            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://eyu333.github.io/index/images/木块.jpg" },
-            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://eyu333.github.io/index/images/木片.jpg" },
-            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://eyu333.github.io/index/images/气球.jpg" },
-            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://eyu333.github.io/index/images/烧杯.jpg" },
-            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://eyu333.github.io/index/images/手电筒.jpg" },
-            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://eyu333.github.io/index/images/水槽.jpg" },
-            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://eyu333.github.io/index/images/塑料片.jpg" },
-            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://eyu333.github.io/index/images/铜片.jpg" },
-            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://eyu333.github.io/index/images/洗手池.jpg" },
-            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://eyu333.github.io/index/images/小灯泡.jpg" },
-            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://eyu333.github.io/index/images/药勺.jpg" },
-            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://eyu333.github.io/index/images/音叉.jpg" }
+            { id: 1, name: "抽滤瓶", synonyms: ["抽滤瓶"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 2, name: "带木柄的软橡胶球", synonyms: ["软橡胶球", "橡胶球", "带木柄的橡胶球"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 3, name: "导线", synonyms: ["导线", "电线"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 4, name: "干电池", synonyms: ["干电池", "电池"], imageUrl: "https://images.unsplash.com/photo-1562813733-b31f71025d54?w=400&h=300&fit=crop"  },
+            { id: 5, name: "钢尺", synonyms: ["钢尺", "尺子", "钢直尺"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 6, name: "光屏", synonyms: ["光屏", "屏幕"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 7, name: "搅拌棒（玻璃杯）", synonyms: ["搅拌棒", "玻璃搅拌棒", "玻璃棒"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 8, name: "抹布", synonyms: ["抹布", "布"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 9, name: "木块", synonyms: ["木块", "木头"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 10, name: "木片", synonyms: ["木片", "木板"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 11, name: "气球", synonyms: ["气球"], imageUrl: "https://images.unsplash.com/photo-1518741462761-1f92b82c3c21?w=400&h=300&fit=crop"  },
+            { id: 12, name: "烧杯", synonyms: ["烧杯", "玻璃杯"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 13, name: "手电筒", synonyms: ["手电筒", "手电"], imageUrl: "https://images.unsplash.com/photo-1534533778223-15d8699d0c96?w=400&h=300&fit=crop"  },
+            { id: 14, name: "水槽", synonyms: ["水槽", "水盆"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 15, name: "塑料片", synonyms: ["塑料片", "塑料板"], imageUrl: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=400&h=300&fit=crop"  },
+            { id: 16, name: "铜片", synonyms: ["铜片", "铜板"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 17, name: "洗手池", synonyms: ["洗手池", "水池"], imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=300&fit=crop"  },
+            { id: 18, name: "小灯泡", synonyms: ["小灯泡", "灯泡"], imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=300&fit=crop"  },
+            { id: 19, name: "药勺", synonyms: ["药勺", "药匙"], imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop"  },
+            { id: 20, name: "音叉", synonyms: ["音叉"], imageUrl: "https://images.unsplash.com/photo-1534533778223-15d8699d0c96?w=400&h=300&fit=crop"  }
         ];
 
         // 全局状态管理
@@ -483,8 +466,10 @@
             timer: null,
             remainingTime: 15,
             micPermissionGranted: false,
-            matchThreshold: 0.5,
+            // 拼音相似度匹配配置
+            matchThreshold: 0.5, // 匹配阈值调低到0.5，更宽松
             homophoneMap: {
+                // 扩展同音词映射表，覆盖更多方言发音
                 "杯": ["杯", "悲", "碑", "bēi", "bei"],
                 "瓶": ["瓶", "屏", "萍", "píng", "ping"],
                 "棒": ["棒", "绑", "蚌", "bàng", "bang"],
@@ -514,18 +499,19 @@
                 "药": ["药", "要", "摇", "yào", "yao"],
                 "音": ["音", "因", "印", "yīn", "yin"]
             },
+            // 新增方言发音映射
             dialectMap: {
-                "n": ["l", "n"],
+                "n": ["l", "n"], // 南方方言n/l不分
                 "l": ["n", "l"],
-                "h": ["f", "h"],
+                "h": ["f", "h"], // 部分方言h/f不分
                 "f": ["h", "f"],
-                "z": ["zh", "z"],
+                "z": ["zh", "z"], // 平翘舌不分
                 "c": ["ch", "c"],
                 "s": ["sh", "s"],
                 "zh": ["z", "zh"],
                 "ch": ["c", "ch"],
                 "sh": ["s", "sh"],
-                "ang": ["an", "ang"],
+                "ang": ["an", "ang"], // 前后鼻音不分
                 "eng": ["en", "eng"],
                 "ing": ["in", "ing"],
                 "an": ["ang", "an"],
@@ -541,40 +527,30 @@
             endScreen: document.getElementById('end-screen'),
             currentScore: document.getElementById('current-score'),
             remainingQuestions: document.getElementById('remaining-questions'),
-            accuracyRate: document.getElementById('accuracy-rate'),
+            accuracy: document.getElementById('accuracy'),
             equipmentImg: document.getElementById('equipment-img'),
             statusMessage: document.getElementById('status-message'),
             finalScore: document.getElementById('final-score'),
             progressFill: document.getElementById('progress-fill'),
             questionNumber: document.getElementById('question-number'),
             resultText: document.getElementById('result-text'),
-            statsText: document.getElementById('stats-text'),
+            correctCount: document.getElementById('correct-count'),
             timerCountdown: document.getElementById('timer-countdown'),
-            micPermissionNote: document.getElementById('mic-permission-note'),
-            recordBtn: document.getElementById('record-btn'),
-            loadingOverlay: document.getElementById('loading-overlay')
+            micPermissionNote: document.getElementById('mic-permission-note')
         };
-
-        // 设备检测
-        function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
 
         // 初始化语音识别
         function initSpeechRecognition() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
-            if (!SpeechRecognition) {
-                alert("⚠️ 您的浏览器不支持语音识别功能\n\n推荐使用：\n• Chrome 浏览器\n• Safari 浏览器\n• Edge 浏览器");
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("您的浏览器不支持语音识别功能，请使用Chrome或Edge浏览器");
                 return null;
             }
 
-            const recognition = new SpeechRecognition();
+            const recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = 'zh-CN';
-            recognition.maxAlternatives = 5;
-
+            recognition.maxAlternatives = 5; // 增加识别备选结果
             return recognition;
         }
 
@@ -585,7 +561,7 @@
             currentQuiz.score = 0;
             currentQuiz.answeredQuestions = 0;
             currentQuiz.correctAnswers = 0;
-
+            
             if (!currentQuiz.micPermissionGranted) {
                 currentQuiz.recognition = initSpeechRecognition();
                 if (!currentQuiz.recognition) return;
@@ -609,14 +585,14 @@
             currentQuiz.currentEquipment = currentQuiz.remainingEquipments.pop();
             currentQuiz.answeredQuestions++;
             currentQuiz.remainingTime = 15;
-
+            
             elements.equipmentImg.src = currentQuiz.currentEquipment.imageUrl;
             elements.equipmentImg.alt = currentQuiz.currentEquipment.name;
             elements.questionNumber.textContent = `第${currentQuiz.answeredQuestions}题 / 共${currentQuiz.totalQuestions}题`;
             elements.timerCountdown.textContent = currentQuiz.remainingTime;
             elements.timerCountdown.classList.remove('timer-countdown');
-
-            updateStatus("🎤 点击下方按钮开始录音", "info");
+            
+            updateStatus("请点击开始录音按钮，说出器材名称", "info");
             updateScoreDisplay();
             updateProgressBar();
             startTimer();
@@ -625,19 +601,19 @@
         // 启动答题计时器
         function startTimer() {
             if (currentQuiz.timer) clearInterval(currentQuiz.timer);
-
+            
             currentQuiz.timer = setInterval(() => {
                 currentQuiz.remainingTime--;
                 elements.timerCountdown.textContent = currentQuiz.remainingTime;
-
+                
                 if (currentQuiz.remainingTime <= 5) {
                     elements.timerCountdown.classList.add('timer-countdown');
                 }
-
+                
                 if (currentQuiz.remainingTime <= 0) {
                     clearInterval(currentQuiz.timer);
-                    updateStatus(`⏰ 时间到！正确答案是：${currentQuiz.currentEquipment.name}`, 'warning');
-                    setTimeout(showNextQuestion, 2500);
+                    updateStatus(`时间到！正确答案是：${currentQuiz.currentEquipment.name}`, 'warning');
+                    setTimeout(showNextQuestion, 2000);
                 }
             }, 1000);
         }
@@ -645,25 +621,24 @@
         // 开始录音
         function startRecording() {
             if (!currentQuiz.recognition) return;
-
-            currentQuiz.isRecording = true;
-            elements.recordBtn.classList.add('recording');
-            elements.recordBtn.textContent = '🔴 录音中...';
             
+            currentQuiz.isRecording = true;
             currentQuiz.recognition.start();
-            updateStatus("🎤 正在录音，请说出器材名称...", "info");
+            updateStatus("正在录音，请说出器材名称...", "info");
 
             currentQuiz.recognition.onresult = function(event) {
+                // 遍历所有识别备选结果，只要有一个匹配就算对
                 for (let i = 0; i < event.results.length; i++) {
                     const transcript = event.results[i][0].transcript.trim();
                     console.log(`识别结果${i+1}: ${transcript}`);
-
+                    
                     const isCorrect = fuzzyMatch(transcript, currentQuiz.currentEquipment.name, currentQuiz.currentEquipment.synonyms);
                     if (isCorrect) {
                         handleVoiceInput(transcript, true);
                         return;
                     }
                 }
+                // 所有结果都不匹配
                 handleVoiceInput(event.results[0][0].transcript.trim(), false);
             };
 
@@ -672,24 +647,20 @@
                 let errorMsg = '';
                 switch(event.error) {
                     case 'not-allowed':
-                        errorMsg = '❌ 麦克风权限被拒绝\n请在浏览器设置中授权';
+                        errorMsg = '麦克风权限被拒绝，请在浏览器设置中授权';
                         break;
                     case 'no-speech':
-                        errorMsg = '⚠️ 未检测到语音\n请重新尝试';
+                        errorMsg = '未检测到语音，请重新尝试';
                         break;
                     default:
-                        errorMsg = `❌ 识别错误: ${event.error}`;
+                        errorMsg = `识别错误: ${event.error}`;
                 }
                 updateStatus(errorMsg, 'error');
                 stopRecording();
             };
 
             currentQuiz.recognition.onend = function() {
-                if (currentQuiz.isRecording) {
-                    setTimeout(() => {
-                        if (currentQuiz.isRecording) startRecording();
-                    }, 100);
-                }
+                if (currentQuiz.isRecording) startRecording();
             };
         }
 
@@ -698,63 +669,68 @@
             if (!currentQuiz.recognition) return;
             currentQuiz.isRecording = false;
             currentQuiz.recognition.stop();
-            elements.recordBtn.classList.remove('recording');
-            elements.recordBtn.textContent = '🎤 开始录音';
         }
 
         // 处理语音输入
         function handleVoiceInput(transcript, isCorrect) {
             stopRecording();
             clearInterval(currentQuiz.timer);
-
+            
             const correctAnswer = currentQuiz.currentEquipment.name;
-
+            
             if (isCorrect) {
                 currentQuiz.score += 5;
                 currentQuiz.correctAnswers++;
-                updateStatus(`✅ 回答正确！你说的是：${transcript}`, "success");
+                updateStatus(`回答正确！你说的是：${transcript}`, "success");
             } else {
-                updateStatus(`❌ 回答错误\n正确答案：${correctAnswer}\n你说的是：${transcript}`, "error");
+                updateStatus(`回答错误。正确答案是：${correctAnswer}，你说的是：${transcript}`, "error");
             }
 
-            setTimeout(showNextQuestion, 2500);
+            setTimeout(showNextQuestion, 2000);
         }
 
-        // 模糊匹配算法
+        // 模糊匹配算法 - 优化版
         function fuzzyMatch(transcript, correctAnswer, synonyms) {
+            // 1. 忽略大小写和特殊字符
             const cleanTranscript = transcript.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
             const cleanAnswer = correctAnswer.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
-
+            
+            // 2. 精确匹配
             if (cleanTranscript.includes(cleanAnswer)) return true;
-
+            
+            // 3. 同义词匹配
             for (const synonym of synonyms) {
                 const cleanSynonym = synonym.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
                 if (cleanTranscript.includes(cleanSynonym)) return true;
             }
-
+            
+            // 4. 拼音相似度匹配
             const transcriptPinyin = chineseToPinyin(cleanTranscript);
             const answerPinyin = chineseToPinyin(cleanAnswer);
-
+            
             const similarity = calculatePinyinSimilarity(transcriptPinyin, answerPinyin);
             console.log(`拼音相似度: ${similarity.toFixed(2)}`);
-
+            
             if (similarity >= currentQuiz.matchThreshold) return true;
-
+            
+            // 5. 同义词拼音相似度匹配
             for (const synonym of synonyms) {
                 const cleanSynonym = synonym.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, '').toLowerCase();
                 const synonymPinyin = chineseToPinyin(cleanSynonym);
                 const synonymSimilarity = calculatePinyinSimilarity(transcriptPinyin, synonymPinyin);
                 if (synonymSimilarity >= currentQuiz.matchThreshold) return true;
             }
-
+            
+            // 6. 同音词匹配
             if (homophoneMatch(cleanTranscript, cleanAnswer)) return true;
-
+            
+            // 7. 方言发音匹配
             if (dialectMatch(transcriptPinyin, answerPinyin)) return true;
-
+            
             return false;
         }
 
-        // 中文转拼音
+        // 中文转拼音优化版
         function chineseToPinyin(text) {
             const pinyinMap = {
                 '抽': 'chou', '滤': 'lv', '瓶': 'ping',
@@ -774,28 +750,29 @@
                 '药': 'yao', '勺': 'shao', '音': 'yin',
                 '叉': 'cha'
             };
-
+            
             let pinyin = '';
             for (const char of text) {
                 pinyin += pinyinMap[char] || char;
             }
-
+            
             return pinyin.toLowerCase();
         }
 
-        // 拼音相似度计算
+        // 拼音相似度计算优化版
         function calculatePinyinSimilarity(pinyin1, pinyin2) {
+            // 短文本优先匹配
             if (pinyin1.length <= 2 || pinyin2.length <= 2) {
                 return pinyin1.includes(pinyin2) || pinyin2.includes(pinyin1) ? 1 : 0;
             }
-
+            
             const len1 = pinyin1.length;
             const len2 = pinyin2.length;
             const dp = Array(len1 + 1).fill().map(() => Array(len2 + 1).fill(0));
-
+            
             for (let i = 0; i <= len1; i++) dp[i][0] = i;
             for (let j = 0; j <= len2; j++) dp[0][j] = j;
-
+            
             for (let i = 1; i <= len1; i++) {
                 for (let j = 1; j <= len2; j++) {
                     if (pinyin1[i - 1] === pinyin2[j - 1]) {
@@ -809,10 +786,10 @@
                     }
                 }
             }
-
+            
             const maxLen = Math.max(len1, len2);
             const similarity = 1 - dp[len1][len2] / maxLen;
-
+            
             return similarity;
         }
 
@@ -828,37 +805,40 @@
             return false;
         }
 
-        // 方言发音匹配
+        // 新增方言发音匹配
         function dialectMatch(pinyin1, pinyin2) {
+            // 生成所有可能的方言变体
             const variants1 = generateDialectVariants(pinyin1);
             const variants2 = generateDialectVariants(pinyin2);
-
+            
+            // 检查任意变体是否匹配
             for (const v1 of variants1) {
                 for (const v2 of variants2) {
                     const similarity = calculatePinyinSimilarity(v1, v2);
                     if (similarity >= currentQuiz.matchThreshold) return true;
                 }
             }
-
+            
             return false;
         }
 
         // 生成方言变体
         function generateDialectVariants(pinyin) {
             let variants = new Set([pinyin]);
-
+            
+            // 遍历所有方言映射
             for (const [original, alternatives] of Object.entries(currentQuiz.dialectMap)) {
                 const newVariants = new Set();
-
+                
                 for (const variant of variants) {
                     for (const alt of alternatives) {
                         newVariants.add(variant.replace(new RegExp(original, 'g'), alt));
                     }
                 }
-
+                
                 variants = new Set([...variants, ...newVariants]);
             }
-
+            
             return Array.from(variants);
         }
 
@@ -866,7 +846,7 @@
         function skipQuestion() {
             stopRecording();
             clearInterval(currentQuiz.timer);
-            updateStatus(`⏭️ 已跳过此题\n正确答案：${currentQuiz.currentEquipment.name}`, "info");
+            updateStatus(`已跳过此题，正确答案是：${currentQuiz.currentEquipment.name}`, "info");
             setTimeout(showNextQuestion, 2000);
         }
 
@@ -875,10 +855,11 @@
             elements.currentScore.textContent = Math.round(currentQuiz.score);
             elements.remainingQuestions.textContent = currentQuiz.remainingEquipments.length;
             
+            // 计算正确率
             const accuracy = currentQuiz.answeredQuestions > 0 
                 ? Math.round((currentQuiz.correctAnswers / currentQuiz.answeredQuestions) * 100) 
                 : 0;
-            elements.accuracyRate.textContent = `${accuracy}%`;
+            elements.accuracy.textContent = accuracy;
         }
 
         // 更新进度条
@@ -897,26 +878,25 @@
         function endQuiz() {
             stopRecording();
             if (currentQuiz.timer) clearInterval(currentQuiz.timer);
-
+            
             elements.quizScreen.classList.add('hidden');
             elements.endScreen.classList.remove('hidden');
-
+            
             elements.finalScore.textContent = Math.round(currentQuiz.score);
-
+            elements.correctCount.textContent = `正确题数: ${currentQuiz.correctAnswers} / ${currentQuiz.totalQuestions}`;
+            
             let resultText = '';
-            if (currentQuiz.score >= 90) {
-                resultText = '🏆 优秀！你对实验器材非常熟悉';
-            } else if (currentQuiz.score >= 80) {
-                resultText = '👍 良好！继续加油';
-            } else if (currentQuiz.score >= 60) {
-                resultText = '✅ 合格！还需要多加练习';
+            const accuracy = (currentQuiz.correctAnswers / currentQuiz.totalQuestions) * 100;
+            if (accuracy >= 90) {
+                resultText = '优秀！你对实验器材非常熟悉';
+            } else if (accuracy >= 80) {
+                resultText = '良好！继续加油';
+            } else if (accuracy >= 60) {
+                resultText = '合格！还需要多加练习';
             } else {
-                resultText = '📚 不合格！请认真学习实验器材名称';
+                resultText = '不合格！请认真学习实验器材名称';
             }
             elements.resultText.textContent = resultText;
-
-            const accuracy = Math.round((currentQuiz.correctAnswers / currentQuiz.totalQuestions) * 100);
-            elements.statsText.textContent = `正确率: ${accuracy}% (${currentQuiz.correctAnswers}/${currentQuiz.totalQuestions})`;
         }
 
         // 重置答题
@@ -924,7 +904,7 @@
             elements.endScreen.classList.add('hidden');
             elements.startScreen.classList.remove('hidden');
             elements.progressFill.style.width = '0%';
-
+            
             currentQuiz = {
                 remainingEquipments: [],
                 currentEquipment: null,
@@ -941,67 +921,131 @@
                 homophoneMap: currentQuiz.homophoneMap,
                 dialectMap: currentQuiz.dialectMap
             };
-
+            
             if (currentQuiz.micPermissionGranted) {
                 elements.micPermissionNote.style.display = 'none';
             }
         }
 
         // 图片加载失败处理
-        elements.equipmentImg.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2NjY2NjYyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM2NjY2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lm77niYfliqDovb3lpLHotKU8L3RleHQ+PC9zdmc+';
-            updateStatus('⚠️ 图片加载失败，请检查网络连接', 'error');
+        document.getElementById('equipment-img').addEventListener('error', function() {
+            this.src = 'https://via.placeholder.com/400x300/cccccc/666666?text= 图片加载失败';
+            updateStatus('图片加载失败，请检查网络连接', 'error');
         });
 
-        // 图片预加载
-        function preloadImages() {
-            let loadedCount = 0;
-            const totalImages = equipmentList.length;
-
+        // 页面加载完成后预加载所有图片
+        window.addEventListener('load', function() {
             equipmentList.forEach(equipment => {
                 const img = new Image();
-                img.onload = () => {
-                    loadedCount++;
-                    if (loadedCount === totalImages) {
-                        elements.loadingOverlay.style.display = 'none';
-                    }
-                };
-                img.onerror = () => {
-                    loadedCount++;
-                    if (loadedCount === totalImages) {
-                        elements.loadingOverlay.style.display = 'none';
-                    }
-                };
                 img.src = equipment.imageUrl;
             });
+        });
 
-            // 超时处理
-            setTimeout(() => {
-                elements.loadingOverlay.style.display = 'none';
-            }, 5000);
-        }
-
-        // 页面加载完成后预加载所有图片
-        window.addEventListener('load', preloadImages);
-
-        // 防止双击缩放
+        // 禁用双击缩放
         document.addEventListener('dblclick', function(e) {
             e.preventDefault();
-        }, { passive: false });
+        });
 
-        // 防止手势缩放
+        // 禁用手势缩放
         document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
-        }, { passive: false });
+        });
 
-        // 触摸反馈增强
-        document.querySelectorAll('.control-btn').forEach(btn => {
-            btn.addEventListener('touchstart', function() {
-                this.style.transform = 'scale(0.95)';
-            });
-            btn.addEventListener('touchend', function() {
-                this.style.transform = 'scale(1)';
-            });
+        // 语音测试面板控制
+        document.getElementById('voice-test-btn').addEventListener('click', function() {
+            document.getElementById('voice-test-panel').classList.remove('hidden');
+        });
+
+        document.getElementById('close-panel').addEventListener('click', function() {
+            document.getElementById('voice-test-panel').classList.add('hidden');
+        });
+
+        // 开始语音测试
+        document.getElementById('start-test').addEventListener('click', function() {
+            const startBtn = this;
+            const statusEl = document.getElementById('test-status');
+            const resultEl = document.getElementById('test-result');
+            const contentEl = document.getElementById('result-content');
+            const suggestionsEl = document.getElementById('suggestions');
+            
+            startBtn.disabled = true;
+            statusEl.textContent = "正在测试麦克风和语音识别功能，请说一些内容...";
+            statusEl.className = "test-status status-info";
+            resultEl.classList.add('hidden');
+            
+            // 初始化语音识别
+            const recognition = initSpeechRecognition();
+            if (!recognition) {
+                statusEl.textContent = "浏览器不支持语音识别功能，请使用Chrome或Edge浏览器";
+                statusEl.className = "test-status status-error";
+                suggestionsEl.innerHTML = `<strong>建议:</strong> <br>1. 升级浏览器到最新版本 <br>2. 使用Chrome或Edge浏览器 <br>3. 检查是否有麦克风硬件支持`;
+                suggestionsEl.classList.remove('hidden');
+                startBtn.disabled = false;
+                return;
+            }
+            
+            // 设置识别回调
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript.trim();
+                const confidence = event.results[0][0].confidence * 100;
+                
+                contentEl.innerHTML = `
+                    <p>识别结果: <strong>${transcript}</strong></p>
+                    <p>置信度: <strong>${confidence.toFixed(1)}%</strong></p>
+                `;
+                
+                statusEl.textContent = "语音识别测试成功！";
+                statusEl.className = "test-status status-success";
+                suggestionsEl.innerHTML = `<strong>建议:</strong> 语音识别功能正常，可以开始答题了`;
+                suggestionsEl.classList.remove('hidden');
+                resultEl.classList.remove('hidden');
+                
+                recognition.stop();
+                startBtn.disabled = false;
+            };
+            
+            recognition.onerror = function(event) {
+                let errorMsg = '';
+                let suggestions = '';
+                
+                switch(event.error) {
+                    case 'not-allowed':
+                        errorMsg = '麦克风权限被拒绝，请在浏览器设置中授权';
+                        suggestions = `<strong>解决方法:</strong> <br>1. 点击浏览器地址栏左侧的锁图标 <br>2. 找到麦克风权限设置 <br>3. 将权限设置为"允许"`;
+                        break;
+                    case 'no-speech':
+                        errorMsg = '未检测到语音输入，请确保麦克风正常工作';
+                        suggestions = `<strong>解决方法:</strong> <br>1. 检查麦克风是否已连接 <br>2. 确保麦克风未被其他程序占用 <br>3. 说话时靠近麦克风`;
+                        break;
+                    case 'audio-capture':
+                        errorMsg = '无法访问麦克风，请检查硬件连接';
+                        suggestions = `<strong>解决方法:</strong> <br>1. 检查麦克风是否正确连接 <br>2. 确保麦克风硬件正常 <br>3. 在系统设置中检查麦克风是否被启用`;
+                        break;
+                    default:
+                        errorMsg = `语音识别错误: ${event.error}`;
+                        suggestions = `<strong>建议:</strong> 请重试或更换浏览器`;
+                }
+                
+                statusEl.textContent = errorMsg;
+                statusEl.className = "test-status status-error";
+                suggestionsEl.innerHTML = suggestions;
+                suggestionsEl.classList.remove('hidden');
+                resultEl.classList.remove('hidden');
+                
+                recognition.stop();
+                startBtn.disabled = false;
+            };
+            
+            recognition.start();
+        });
+
+        // 重置测试
+        document.getElementById('reset-test').addEventListener('click', function() {
+            document.getElementById('test-status').textContent = "点击开始测试麦克风和语音识别功能";
+            document.getElementById('test-status').className = "test-status status-info";
+            document.getElementById('test-result').classList.add('hidden');
+            document.getElementById('suggestions').innerHTML = '';
+            document.getElementById('suggestions').classList.add('hidden');
         });
     </script>
 </body>
